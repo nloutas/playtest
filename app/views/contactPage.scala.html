@@ -1,0 +1,148 @@
+@(message: String)(contactForm: Form[Contact])
+@import helper._
+
+@main(message) {
+
+<h1>@message</h1>
+  @if(contactForm.hasGlobalErrors) {
+        <ul>
+        @for(error <- contactForm.globalErrors) {
+          <li>@error.message</li>
+        }
+        </ul>
+  }
+
+  @form(action = routes.Application.addContact(), 'id -> "contactForm", 'class -> "form-horizontal") {
+        @CSRF.formField
+
+        @inputText(
+            contactForm("contact_type_id"),
+            'id -> "contact_type_id",
+            'placeholder -> "",
+            '_label -> "Contact Type",
+            'class -> "form-control",
+            '_showConstraints -> true,
+            'maxlength -> 32
+        )
+
+        @inputText(
+            contactForm("referral_type_id"),
+            'id -> "referral_type_id",
+            'placeholder -> "",
+            '_label -> "Referral Type",
+            'class -> "form-control",
+            'maxlength -> 32
+        )
+        @select(
+          contactForm("title"),
+          options ("Mr"->"Mr","Mrs"->"Mrs","Ms"->"Ms"),
+          args = '_label -> "Title:"
+        )
+        @inputText(
+            contactForm("first_name"),
+            'id -> "first_name",
+            'placeholder -> "",
+            '_label -> "First name",
+            'class -> "form-control",
+            'maxlength -> 32
+        )
+        @inputText(
+            contactForm("last_name"),
+            'id -> "last_name",
+            'placeholder -> "",
+            '_label -> "Last name",
+            'class -> "form-control",
+            'maxlength -> 32
+        )
+        @inputText(
+            contactForm("organization"),
+            'id -> "organization",
+            'placeholder -> "",
+            '_label -> "Organization",
+            'class -> "form-control",
+            'maxlength -> 32
+        )
+        @inputText(
+            contactForm("address"),
+            'id -> "address",
+            'placeholder -> "",
+            '_label -> "Address",
+            'class -> "form-control",
+            'maxlength -> 32
+        )
+        @inputText(
+            contactForm("city"),
+            'id -> "city",
+            'placeholder -> "",
+            '_label -> "City",
+            'class -> "form-control",
+            'maxlength -> 32
+        )
+        @inputText(
+            contactForm("postal_code"),
+            'id -> "postal_code",
+            'placeholder -> "",
+            '_label -> "Postal Code",
+            'class -> "form-control",
+            'maxlength -> 10
+        )
+        @select(
+          contactForm("state_id"),
+          options (
+            "BW"->"Baden-Württemberg",
+            "BY"->"Bavaria",
+            "BE"->"Berlin",
+            "BB"->"Brandenburg",
+            "HB"->"Bremen",
+            "HH"->"Hamburg",
+            "HE"->"Hesse",
+            "NI"->"Lower Saxony",
+            "MV"->"Mecklenburg-Vorpommern",
+            "NW"->"North Rhine-Westphalia",
+            "RP"->"Rhineland-Palatinate",
+            "SL"->"Saarland",
+            "SN"->"Saxony",
+            "ST"->"Saxony-Anhalt",
+            "SH"->"Schleswig-Holstein",
+            "TH"->"Thuringia"
+          ),
+          args = '_label -> "State:"
+        )
+
+        @inputText(
+            contactForm("country"),
+            'id -> "country",
+            'placeholder -> "DE",
+            '_label -> "Country",
+            '_help -> "Please give the country ISO2 code ",
+            'class -> "form-control",
+            'maxlength -> 2
+        )
+        @inputText(
+            contactForm("phone"),
+            'id -> "phone",
+            'placeholder -> "++49",
+            '_label -> "Phone number",
+            '_help -> "Mobile or home number",
+            'class -> "form-control",
+            'maxlength -> 20
+        )
+        @inputText(
+            contactForm("email"),
+            'id -> "email",
+            'placeholder -> "yourEmail@emnify.com",
+            '_label -> "Email",
+            '_help -> "",
+            'class -> "form-control",
+            'maxlength -> 32
+        )
+        @textarea(field = contactForm("notes"), args = '_label -> "Notes:", 'rows -> 3, 'cols -> 50)
+
+
+
+      <input type="submit" class="btn btn-primary" value="Add Contact">
+
+  }
+
+
+}
