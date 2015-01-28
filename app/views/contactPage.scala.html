@@ -12,7 +12,7 @@
         </ul>
   }
 
-  @form(action = routes.Application.addContact(), 'id -> "contactForm", 'class -> "form-horizontal") {
+  @form(action = routes.Application.processContact(), 'id -> "contactForm", 'class -> "form-horizontal") {
         @CSRF.formField
 
         @inputText(
@@ -133,6 +133,7 @@
             'placeholder -> "yourEmail@emnify.com",
             '_label -> "Email",
             '_help -> "",
+            '_showConstraints -> true,
             'class -> "form-control",
             'maxlength -> 32
         )
@@ -140,7 +141,8 @@
 
 
 
-      <input type="submit" class="btn btn-primary" value="Add Contact">
+      &nbsp; &nbsp; &nbsp; &nbsp;  <input type="submit" class="btn btn-primary" value="save" name="action">
+      &nbsp; &nbsp; &nbsp; &nbsp;  <input type="submit" class="btn btn-primary" value="delete" name="action">
 
   }
 

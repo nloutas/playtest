@@ -12,4 +12,4 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /contacts                   controllers.Application.getContacts
 GET     /contact                    controllers.Application.contactForm()
 
-POST    /contact                    controllers.Application.addContact()
+POST    /contact                    controllers.Application.processContact()

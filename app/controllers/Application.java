@@ -27,19 +27,37 @@ public class Application extends Controller {
    * @return Contact page
    */
   public static Result contactForm() {
-    return ok(contactPage.render("Add a new contact", contactForm));
+    // refresh();
+    return ok(contactPage.render("Contact Form", contactForm));
 
   }
 
   /**
    * @return redirect back to the index page
    */
-  public static Result addContact() {
+  public static Result processContact() {
     Contact contact = contactForm.bindFromRequest().get();
+    String postAction = request().body().asFormUrlEncoded().get("action")[0];
+
     if (contact == null) {
-      return badRequest(contactPage.render("Unable to save. Please check the logs", contactForm));
+      return badRequest(contactPage.render("Unable to " + postAction + ". Please check the logs",
+          contactForm));
     }
-    contact.save();
+    switch (postAction) {
+      case "save":
+        contact.save();
+        break;
+      case "update":
+        contact.update();
+        break;
+      case "delete":
+        contact.delete();
+        break;
+      default:
+        return badRequest(contactPage.render("Invalid action " + postAction
+            + ". Only save, update and delete are allowed.", contactForm));
+    }
+
     return redirect(routes.Application.getContacts());
   }
 

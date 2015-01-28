@@ -21,9 +21,9 @@ public class Contact extends Model {
 
   private static final long serialVersionUID = -5227973134571381237L;
 
-  // @Id
-  // // @Constraints.Min(10)
-  // public Long contact_id = 1l;
+  //@Id
+  // @Constraints.Min(10)
+  //public Long contact_id;
 
   public String contact_type_id;
   public String referral_type_id;
@@ -44,7 +44,7 @@ public class Contact extends Model {
   public String postal_code;
   public String state_id;
   public String country;
-
+  // @Constraints.Required
   public String phone;
   // @Constraints.Email
   public String email;
