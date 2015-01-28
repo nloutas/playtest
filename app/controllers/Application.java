@@ -15,7 +15,6 @@ import views.html.*;
  *
  */
 public class Application extends Controller {
-  final static Form<Contact> contactForm = Form.form(Contact.class);
   /**
    * @return home page
    */
@@ -24,34 +23,52 @@ public class Application extends Controller {
   }
 
   /**
-   * @return Contact page
+   * @return Contact form for new contact
    */
-  public static Result contactForm() {
-    // refresh();
+  public static Result addContact() {
+    final Form<Contact> contactForm = Form.form(Contact.class);
     return ok(contactPage.render("Contact Form", contactForm));
-
   }
 
   /**
-   * @return redirect back to the index page
+   * @return Contact form for given id
+   */
+  public static Result editContact(Long contact_id) {
+    Contact contact = Contact.find.byId( contact_id);
+    if (contact == null) {
+      final Form<Contact> contactForm = Form.form(Contact.class);
+      return badRequest(contactPage.render("Cannot find Contact with Id " + contact_id + ".",
+          contactForm));
+    }
+    final Form<Contact> contactForm = Form.form(Contact.class).fill( contact );
+    return ok(contactPage.render("Contact Form", contactForm));
+  }
+
+  /**
+   * @return redirect to the contacts page
    */
   public static Result processContact() {
-    Contact contact = contactForm.bindFromRequest().get();
     String postAction = request().body().asFormUrlEncoded().get("action")[0];
-
+    final Form<Contact> contactForm = Form.form(Contact.class).bindFromRequest();
+    if (contactForm.hasErrors()) {
+      return badRequest(contactPage.render("Given data has errors", contactForm));
+    }
+    Contact contact = contactForm.get();
     if (contact == null) {
       return badRequest(contactPage.render("Unable to " + postAction + ". Please check the logs",
           contactForm));
     }
+
     switch (postAction) {
       case "save":
-        contact.save();
-        break;
-      case "update":
-        contact.update();
+        if (contact.contact_id != null) {
+          contact.update();
+        } else {
+          contact.save();
+        }
         break;
       case "delete":
-        contact.delete();
+        new Model.Finder<>(Long.class, Contact.class).byId(contact.contact_id).delete();
         break;
       default:
         return badRequest(contactPage.render("Invalid action " + postAction
@@ -62,10 +79,18 @@ public class Application extends Controller {
   }
 
   /**
-   * @return list of contacts in json format
+   * @return list of contacts
    */
   public static Result getContacts() {
-    List<Contact> contacts = new Model.Finder(String.class, Contact.class).all();
+    List<Contact> contacts = new Model.Finder(Long.class, Contact.class).all();
+    return ok(contactList.render(contacts));
+  }
+
+  /**
+   * @return list of contacts in json format
+   */
+  public static Result getContactsJson() {
+    List<Contact> contacts = new Model.Finder(Long.class, Contact.class).all();
     return ok(toJson(contacts));
   }
 }

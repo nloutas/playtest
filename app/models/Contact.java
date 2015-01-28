@@ -4,11 +4,12 @@
 package models;
 
 import java.sql.Date;
+import java.lang.reflect.Field;
 
 import javax.persistence.*;
 
 import play.db.ebean.*;
-// import play.data.validation.*;
+import play.data.validation.*;
 import play.data.format.*;
 
 
@@ -21,9 +22,8 @@ public class Contact extends Model {
 
   private static final long serialVersionUID = -5227973134571381237L;
 
-  //@Id
-  // @Constraints.Min(10)
-  //public Long contact_id;
+  @Id
+  public Long contact_id;
 
   public String contact_type_id;
   public String referral_type_id;
@@ -46,7 +46,7 @@ public class Contact extends Model {
   public String country;
   // @Constraints.Required
   public String phone;
-  // @Constraints.Email
+  @Constraints.Email
   public String email;
 
   @Formats.DateTime(pattern = "dd/MM/yyyy")
@@ -56,5 +56,6 @@ public class Contact extends Model {
   public static Finder<Long,Contact> find = new Finder<Long,Contact>(
       Long.class, Contact.class
       );
+
 
 }

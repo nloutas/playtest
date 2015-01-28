@@ -4,6 +4,7 @@
 # --- !Ups
 
 create table contact (
+  contact_id                bigint auto_increment not null,
   contact_type_id           varchar(255),
   referral_type_id          varchar(255),
   title                     varchar(255),
@@ -18,7 +19,8 @@ create table contact (
   phone                     varchar(255),
   email                     varchar(255),
   last_updated              date,
-  notes                     varchar(255))
+  notes                     varchar(255),
+  constraint pk_contact primary key (contact_id))
 ;
 
 
