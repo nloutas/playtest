@@ -134,11 +134,6 @@
 	<classpathentry kind="lib" path="/home/nikos/.ivy2/cache/org.easytesting/fest-util/jars/fest-util-1.1.6.jar"/>
 	<classpathentry kind="lib" path="/home/nikos/git/playtest/target/scala-2.11/classes_managed"/>
 	<classpathentry kind="lib" path="/home/nikos/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

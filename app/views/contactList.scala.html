@@ -4,23 +4,23 @@
 
 @for(contact <- contactList){
   <div class="contact-item">
-  <h2>Contact @contact.contact_id <a href="/contact/@contact.contact_id">edit</a> </h2>
+  <h2>Contact @contact.getContact_id <a href="/contact/@contact.getContact_id">edit</a> </h2>
   <ul>
-      <li>Contact type: @contact.contact_type_id</li>
-      <li>Referral type: @contact.referral_type_id</li>
-      <li>Title: @contact.title</li>
-      <li>First name: @contact.first_name</li>
-      <li>Last name: @contact.last_name</li>
-      <li>Organization: @contact.organization</li>
-      <li>Address: @contact.address</li>
-      <li>City: @contact.city</li>
-      <li>Postal code: @contact.postal_code</li>
-      <li>State: @contact.state_id</li>
-      <li>Country: @contact.country</li>
-      <li>Phone: @contact.phone</li>
-      <li>Email: @contact.email</li>
-      <li>Last updated: @contact.last_updated</li>
-      <li>Notes: @contact.notes</li>
+      <li>Contact type: @contact.getContact_type_id</li>
+      <li>Referral type: @contact.getReferral_type_id</li>
+      <li>Title: @contact.getTitle</li>
+      <li>First name: @contact.getFirst_name</li>
+      <li>Last name: @contact.getLast_name</li>
+      <li>Organization: @contact.getOrganization</li>
+      <li>Address: @contact.getAddress</li>
+      <li>City: @contact.getCity</li>
+      <li>Postal code: @contact.getPostal_code</li>
+      <li>State: @contact.getState_id</li>
+      <li>Country: @contact.getCountry</li>
+      <li>Phone: @contact.getPhone</li>
+      <li>Email: @contact.getEmail</li>
+      <li>Last updated: @contact.getLast_updated</li>
+      <li>Notes: @contact.getNotes</li>
     </ul>
   </div>
 }

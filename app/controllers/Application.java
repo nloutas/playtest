@@ -61,14 +61,14 @@ public class Application extends Controller {
 
     switch (postAction) {
       case "save":
-        if (contact.contact_id != null) {
+        if (contact.getContact_id() != null) {
           contact.update();
         } else {
           contact.save();
         }
         break;
       case "delete":
-        new Model.Finder<>(Long.class, Contact.class).byId(contact.contact_id).delete();
+        new Model.Finder<>(Long.class, Contact.class).byId(contact.getContact_id()).delete();
         break;
       default:
         return badRequest(contactPage.render("Invalid action " + postAction
