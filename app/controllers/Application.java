@@ -140,9 +140,8 @@ public class Application extends Controller {
     //get fresh from DB
     List<Contact> contacts = new Model.Finder<Long, Contact>(Long.class, Contact.class).all();
 
-
     cacheApi.set("contacts", contacts, duration);
-    Logger.debug("*** caching contacts = " + cacheApi.get("contacts", classTag));
+    Logger.info("*** caching contacts = " + cacheApi.get("contacts", classTag));
 
     return contacts;
   }
