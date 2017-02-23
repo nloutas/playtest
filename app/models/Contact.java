@@ -6,8 +6,7 @@ package models;
 import java.sql.Date;
 
 import javax.persistence.*;
-
-import play.db.ebean.*;
+import com.avaje.ebean.Model;
 import play.data.validation.*;
 import play.data.format.*;
 
@@ -19,7 +18,7 @@ import play.data.format.*;
 @Entity
 public class Contact extends Model {
 
-  private static final long serialVersionUID = -5227973134571381237L;
+  private static final long serialVersionUID = 1L;
 
   @Id
   private Long contact_id;
