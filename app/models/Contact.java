@@ -279,4 +279,30 @@ public class Contact extends Model {
     this.notes = notes;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "Contact [" + (contact_id != null ? "contact_id=" + contact_id + ", " : "")
+        + (contact_type_id != null ? "contact_type_id=" + contact_type_id + ", " : "")
+        + (referral_type_id != null ? "referral_type_id=" + referral_type_id + ", " : "")
+        + (title != null ? "title=" + title + ", " : "")
+        + (first_name != null ? "first_name=" + first_name + ", " : "")
+        + (last_name != null ? "last_name=" + last_name + ", " : "")
+        + (organization != null ? "organization=" + organization + ", " : "")
+        + (address != null ? "address=" + address + ", " : "")
+        + (city != null ? "city=" + city + ", " : "")
+        + (postal_code != null ? "postal_code=" + postal_code + ", " : "")
+        + (state_id != null ? "state_id=" + state_id + ", " : "")
+        + (country != null ? "country=" + country + ", " : "")
+        + (phone != null ? "phone=" + phone + ", " : "")
+        + (email != null ? "email=" + email + ", " : "")
+        + (last_updated != null ? "last_updated=" + last_updated + ", " : "")
+        + (notes != null ? "notes=" + notes : "") + "]";
+  }
+
+
 }

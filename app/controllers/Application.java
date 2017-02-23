@@ -2,9 +2,14 @@ package controllers;
 
 import static play.libs.Json.toJson;
 
-import akka.actor.ActorRef;
+import akka.actor.ActorInitializationException;
+import akka.actor.ActorKilledException;
+import akka.actor.SupervisorStrategy;
+import akka.actor.SupervisorStrategy.Directive;
+
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.inject.*;
 
@@ -17,7 +22,6 @@ import models.Contact;
 import play.Logger;
 import play.api.cache.CacheApi;
 import play.cache.Cached;
-import play.cache.Cache;
 import play.data.Form;
 import play.mvc.*;
 
@@ -31,21 +35,13 @@ import views.html.*;
  */
 public class Application extends Controller {
 
-  private final static Duration duration30 = Duration.create("30 seconds");
+  private final static Duration duration = Duration.create("30 seconds");
+  private final ClassTag<List<Contact>> classTag =
+      scala.reflect.ClassTag$.MODULE$.apply(List.class);
 
   @Inject
   CacheApi cacheApi;
 
-  private ClassTag<ActorRef> classTag = scala.reflect.ClassTag$.MODULE$.apply(List.class);
-
-  // @Inject
-  // @NamedCache("session-cache")
-  // CacheApi sessionCache;
-
-  // @Inject
-  // public static JedisPool jedisPool;
-  //
-  // public static Jedis jedis = null;
 
 
   /**
@@ -123,31 +119,30 @@ public class Application extends Controller {
   /**
    * @return list of contacts in json format
    */
+  @Cached(key = "ContactsJson")
   public Result getContactsJson() {
+    // TODO: use CacheApi getOrElse method
+    // cacheApi.getOrElse("contacts", duration, () -> getDBContacts() , classTag);
     return ok(toJson(getDBContacts()));
   }
 
   private List<Contact> getDBContacts() {
     //use cache if available
+    if (cacheApi.get("contacts", classTag).nonEmpty()) {
+      List<Contact> contacts = cacheApi.get("contacts", classTag).get();
+      contacts.forEach(contact -> {
+        Logger.info("* Cached contact = " + contact.toString());
+      });
+      return contacts;
+    }
 
-    // if (jedis == null) {
-    // jedis = jedisPool.getResource();
-    // }
-    //
-    // if (jedis.exists("contacts")) {
-    // Logger.info("*cache from jedis contacts = " + jedis.get("contacts"));
-    // }
-    // cacheApi.getOrElse("contacts", duration30, arg2, classTag);
 
     //get fresh from DB
-    List<Contact> contacts = new Model.Finder<Long,Contact> (Long.class, Contact.class).all();
+    List<Contact> contacts = new Model.Finder<Long, Contact>(Long.class, Contact.class).all();
 
-    Cache.set("contacts", contacts);
-    // jedis.set("contacts", contacts.toString());
-    // Logger.info("*new jedis contacts = " + jedis.get("contacts"));
 
-    cacheApi.set("contacts", contacts, duration30);
-    Logger.info("* cacheApi contacts = " + cacheApi.get("contacts", classTag));
+    cacheApi.set("contacts", contacts, duration);
+    Logger.debug("*** caching contacts = " + cacheApi.get("contacts", classTag));
 
     return contacts;
   }
