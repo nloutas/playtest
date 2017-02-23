@@ -6,8 +6,7 @@ package models;
 import java.sql.Date;
 
 import javax.persistence.*;
-
-import play.db.ebean.*;
+import com.avaje.ebean.Model;
 import play.data.validation.*;
 import play.data.format.*;
 
@@ -19,7 +18,7 @@ import play.data.format.*;
 @Entity
 public class Contact extends Model {
 
-  private static final long serialVersionUID = -5227973134571381237L;
+  private static final long serialVersionUID = 1L;
 
   @Id
   private Long contact_id;
@@ -279,5 +278,31 @@ public class Contact extends Model {
   public void setNotes(String notes) {
     this.notes = notes;
   }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return "Contact [" + (contact_id != null ? "contact_id=" + contact_id + ", " : "")
+        + (contact_type_id != null ? "contact_type_id=" + contact_type_id + ", " : "")
+        + (referral_type_id != null ? "referral_type_id=" + referral_type_id + ", " : "")
+        + (title != null ? "title=" + title + ", " : "")
+        + (first_name != null ? "first_name=" + first_name + ", " : "")
+        + (last_name != null ? "last_name=" + last_name + ", " : "")
+        + (organization != null ? "organization=" + organization + ", " : "")
+        + (address != null ? "address=" + address + ", " : "")
+        + (city != null ? "city=" + city + ", " : "")
+        + (postal_code != null ? "postal_code=" + postal_code + ", " : "")
+        + (state_id != null ? "state_id=" + state_id + ", " : "")
+        + (country != null ? "country=" + country + ", " : "")
+        + (phone != null ? "phone=" + phone + ", " : "")
+        + (email != null ? "email=" + email + ", " : "")
+        + (last_updated != null ? "last_updated=" + last_updated + ", " : "")
+        + (notes != null ? "notes=" + notes : "") + "]";
+  }
+
 
 }
